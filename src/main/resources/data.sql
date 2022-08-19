@@ -1,0 +1,8 @@
+INSERT INTO users (id, name, manager_id) values (4, 'O', null)
+INSERT INTO users (id, name, manager_id) values (6, 'L', null)
+INSERT INTO users (id, name, manager_id) values (8, 'B', null)
+INSERT INTO users (id, name, manager_id) values (1, 'N', 4)
+INSERT INTO users (id, name, manager_id) values (2, 'V', 6)
+INSERT INTO users (id, name, manager_id) values (3, 'S', 8)
+INSERT INTO users (id, name, manager_id) values (5, 'D', 6)
+INSERT INTO users (id, name, manager_id) values (7, 'M', 6)
