@@ -16,7 +16,7 @@ public class UserService {
         return userRepository.getManagersThatHaveMoreThan3UsersUnderControlSql();
     }
 
-    public List<UserDto> getManagersThatHaveMoreThan3UsersUnderControlJpql() {
+    public List<User> getManagersThatHaveMoreThan3UsersUnderControlJpql() {
         return userRepository.getManagersThatHaveMoreThan3UsersUnderControlJpql();
     }
 }

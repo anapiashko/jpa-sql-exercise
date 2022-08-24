@@ -21,4 +21,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private User manager;
+
+    public User(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

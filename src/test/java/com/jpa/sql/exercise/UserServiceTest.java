@@ -22,7 +22,7 @@ class UserServiceTest {
 
     @Test
     void getManagersThatHaveMoreThan3UsersUnderControlJpql() {
-        List<UserDto> users = userService.getManagersThatHaveMoreThan3UsersUnderControlJpql();
+        List<User> users = userService.getManagersThatHaveMoreThan3UsersUnderControlJpql();
         assertEquals(1, users.size());
     }
 }
