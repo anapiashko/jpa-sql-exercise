@@ -12,7 +12,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getManagersThatHaveMoreThan3UsersUnderControl() {
-        return userRepository.getManagersThatHaveMoreThan3UsersUnderControl();
+    public List<User> getManagersThatHaveMoreThan3UsersUnderControlSql() {
+        return userRepository.getManagersThatHaveMoreThan3UsersUnderControlSql();
+    }
+
+    public List<UserDto> getManagersThatHaveMoreThan3UsersUnderControlJpql() {
+        return userRepository.getManagersThatHaveMoreThan3UsersUnderControlJpql();
     }
 }

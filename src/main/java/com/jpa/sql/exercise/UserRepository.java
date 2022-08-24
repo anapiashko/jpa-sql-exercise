@@ -13,5 +13,11 @@ public interface UserRepository extends JpaRepository<User, String> {
             "inner join users u2 on u1.manager_id = u2.id " +
             "group by u2.id having count(u2.id) >= 3;",
             nativeQuery = true)
-    List<User> getManagersThatHaveMoreThan3UsersUnderControl();
+    List<User> getManagersThatHaveMoreThan3UsersUnderControlSql();
+
+    @Query(value = "select new com.jpa.sql.exercise.UserDto(u2.id,u2.name,count(u2.id)) " +
+            "from User u1 " +
+            "join User u2 on u1.manager.id=u2.id " +
+            "group by u2.id having count(u2.id)>=3")
+    List<UserDto> getManagersThatHaveMoreThan3UsersUnderControlJpql();
 }

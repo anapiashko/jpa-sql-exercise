@@ -15,8 +15,14 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    void getManagersThatHaveMoreThan3UsersUnderControl() {
-        List<User> users = userService.getManagersThatHaveMoreThan3UsersUnderControl();
+    void getManagersThatHaveMoreThan3UsersUnderControlSql() {
+        List<User> users = userService.getManagersThatHaveMoreThan3UsersUnderControlSql();
+        assertEquals(1, users.size());
+    }
+
+    @Test
+    void getManagersThatHaveMoreThan3UsersUnderControlJpql() {
+        List<UserDto> users = userService.getManagersThatHaveMoreThan3UsersUnderControlJpql();
         assertEquals(1, users.size());
     }
 }
