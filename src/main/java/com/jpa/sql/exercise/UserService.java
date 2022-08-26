@@ -3,7 +3,6 @@ package com.jpa.sql.exercise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,5 +17,9 @@ public class UserService {
 
     public List<User> getManagersThatHaveMoreThan3UsersUnderControlJpql() {
         return userRepository.getManagersThatHaveMoreThan3UsersUnderControlJpql();
+    }
+
+    public List<User> getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi() {
+        return userRepository.getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi();
     }
 }

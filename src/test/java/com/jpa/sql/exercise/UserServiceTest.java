@@ -25,4 +25,10 @@ class UserServiceTest {
         List<User> users = userService.getManagersThatHaveMoreThan3UsersUnderControlJpql();
         assertEquals(1, users.size());
     }
+
+    @Test
+    void getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi() {
+        List<User> users = userService.getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi();
+        assertEquals(1, users.size());
+    }
 }
