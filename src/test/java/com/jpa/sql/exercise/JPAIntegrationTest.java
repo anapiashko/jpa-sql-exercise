@@ -1,5 +1,6 @@
 package com.jpa.sql.exercise;
 
+import com.jpa.sql.exercise.entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

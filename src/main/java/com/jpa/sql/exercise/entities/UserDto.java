@@ -1,4 +1,4 @@
-package com.jpa.sql.exercise;
+package com.jpa.sql.exercise.entities;
 
 import lombok.*;
 

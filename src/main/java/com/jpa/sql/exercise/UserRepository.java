@@ -1,5 +1,6 @@
 package com.jpa.sql.exercise;
 
+import com.jpa.sql.exercise.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, String>, UserCriteri
             nativeQuery = true)
     List<User> getManagersThatHaveMoreThan3UsersUnderControlSql();
 
-    @Query(value = "select new com.jpa.sql.exercise.User(u2.id,u2.name) " +
+    @Query(value = "select new com.jpa.sql.exercise.entities.User(u2.id,u2.name) " +
             "from User u1 " +
             "join User u2 on u1.manager.id=u2.id " +
             "group by u2.id having count(u2.id)>=3")
