@@ -18,8 +18,6 @@ public class Document {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    private Boolean valid;
-
     private LocalDate issueDate;
 
     private LocalDate expirationDate;

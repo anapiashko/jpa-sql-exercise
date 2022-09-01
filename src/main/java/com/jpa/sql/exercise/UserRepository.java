@@ -1,5 +1,6 @@
 package com.jpa.sql.exercise;
 
+import com.jpa.sql.exercise.entities.Document;
 import com.jpa.sql.exercise.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,9 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserCriter
             "join User u2 on u1.manager.id=u2.id " +
             "group by u2.id having count(u2.id)>=3")
     List<User> getManagersThatHaveMoreThan3UsersUnderControlJpql();
+
+    @Query(value = "select u.documents " +
+            "from User u " +
+            "where u.id = :id")
+    List<Document> getDocumentsById(Integer id);
 }

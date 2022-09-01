@@ -1,5 +1,6 @@
 package com.jpa.sql.exercise;
 
+import com.jpa.sql.exercise.entities.Document;
 import com.jpa.sql.exercise.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,9 @@ public class UserService {
 
     public User saveUser (User user) {
         return userRepository.save(user);
+    }
+
+    public List<Document> getDocumentsByUserId (Integer userId) {
+        return userRepository.getDocumentsById(userId);
     }
 }
