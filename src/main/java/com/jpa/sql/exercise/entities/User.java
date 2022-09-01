@@ -3,6 +3,7 @@ package com.jpa.sql.exercise.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Getter
@@ -14,8 +15,8 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
-    private String id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
     private String name;
 
@@ -23,8 +24,15 @@ public class User {
     @JoinColumn(name = "manager_id")
     private User manager;
 
-    public User(String id, String name) {
+    @OneToMany
+    private List<Document> documents;
+
+    public User(Integer id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public User(String name) {
         this.name = name;
     }
 }

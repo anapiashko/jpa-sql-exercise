@@ -9,3 +9,6 @@ spring:
     properties:
       hibernate.ddl-auto: update
       hibernate.dialect: org.hibernate.dialect.PostgreSQL10Dialect
+#  sql:
+#    init:
+#      mode: always

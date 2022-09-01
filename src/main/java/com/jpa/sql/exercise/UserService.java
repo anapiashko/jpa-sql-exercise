@@ -23,4 +23,8 @@ public class UserService {
     public List<User> getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi() {
         return userRepository.getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi();
     }
+
+    public User saveUser (User user) {
+        return userRepository.save(user);
+    }
 }

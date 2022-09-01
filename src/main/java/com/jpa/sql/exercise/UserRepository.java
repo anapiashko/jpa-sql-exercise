@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String>, UserCriteriaRepository {
+public interface UserRepository extends JpaRepository<User, Integer>, UserCriteriaRepository {
 
     @Query(value = "select u2.id,u2.name,u2.manager_id,count(u2.id) from users u1 " +
             "inner join users u2 on u1.manager_id = u2.id " +

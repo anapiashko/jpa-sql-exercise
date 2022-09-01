@@ -38,7 +38,7 @@ class JPAIntegrationTest {
 
     @Test
     void whenSaveAndRetrieveEntityThenOK() {
-        User genericEntity = UserRepository.save(new User("1","test"));
+        User genericEntity = UserRepository.save(new User("test"));
         Optional<User> foundEntity = UserRepository.findById(genericEntity.getId());
 
         assertTrue(foundEntity.isPresent());
