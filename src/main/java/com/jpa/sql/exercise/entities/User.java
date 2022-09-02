@@ -25,7 +25,7 @@ public class User {
     @JoinColumn(name = "manager_id")
     private User manager;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<Document> documents;
 
     public User(Integer id, String name) {

@@ -13,6 +13,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public User findUserById(Integer userId) {
+        return userRepository.findById(userId).orElseThrow();
+    }
+
+    public User findUserWithDocumentsById(Integer userId) {
+        return userRepository.getUserWithDocuments(userId);
+    }
+
     public List<User> getManagersThatHaveMoreThan3UsersUnderControlSql() {
         return userRepository.getManagersThatHaveMoreThan3UsersUnderControlSql();
     }

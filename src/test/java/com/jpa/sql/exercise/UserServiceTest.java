@@ -1,12 +1,14 @@
 package com.jpa.sql.exercise;
 
 import com.jpa.sql.exercise.entities.Document;
+import com.jpa.sql.exercise.entities.DocumentType;
 import com.jpa.sql.exercise.entities.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,7 +58,35 @@ class UserServiceTest {
 
         List<Document> documents = userService.getDocumentsByUserId(user.getId());
         assertEquals(3, documents.size());
-        assertTrue(equalsExpectedList(documents, documents));
+    }
+
+    @Test
+    void addDocumentsToUser() {
+
+        // save the user itself
+        User expectedUser = User.builder()
+                .name("A")
+                .manager(null)
+                .documents(null)
+                .build();
+        User user = userService.saveUser(expectedUser);
+
+        User foundUser = userService.findUserWithDocumentsById(user.getId());
+
+        // adding the document to the user
+        Document newDocument1 = Document.builder()
+                .documentType(DocumentType.INSURANCE)
+                .issueDate(LocalDate.of(2025,8, 29))
+                .expirationDate(LocalDate.of(2030, 8,29))
+                .build();
+        foundUser.getDocuments().add(newDocument1);
+
+        User userWithNewDocument = userService.saveUser(foundUser);
+
+        List<Document> documents = userService.getDocumentsByUserId(userWithNewDocument.getId());
+
+        assertEquals(user.getId(), userWithNewDocument.getId());
+        assertEquals(1, documents.size());
     }
 
     @Test

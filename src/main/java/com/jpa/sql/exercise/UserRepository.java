@@ -27,4 +27,10 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserCriter
             "from User u " +
             "where u.id = :id")
     List<Document> getDocumentsById(Integer id);
+
+    @Query(value = "select u " +
+            "from User u " +
+            "left join fetch u.documents " +
+            "where u.id = :id")
+    User getUserWithDocuments(Integer id);
 }
