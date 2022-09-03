@@ -31,6 +31,7 @@ class UserServiceTest {
     }
 
     @Test
+    @Sql(scripts = "classpath:populateDB.sql")
     void getManagersThatHaveMoreThan3UsersUnderControlJpql() {
         List<User> users = userService.getManagersThatHaveMoreThan3UsersUnderControlJpql();
         assertEquals(1, users.size());
@@ -38,6 +39,7 @@ class UserServiceTest {
     }
 
     @Test
+    @Sql(scripts = "classpath:populateDB.sql")
     void getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi() {
         List<User> users = userService.getManagersThatHaveMoreThan3UsersUnderControlCriteriaApi();
         assertEquals(1, users.size());
@@ -79,14 +81,24 @@ class UserServiceTest {
                 .issueDate(LocalDate.of(2025,8, 29))
                 .expirationDate(LocalDate.of(2030, 8,29))
                 .build();
-        foundUser.getDocuments().add(newDocument1);
 
-        User userWithNewDocument = userService.saveUser(foundUser);
-
-        List<Document> documents = userService.getDocumentsByUserId(userWithNewDocument.getId());
+        User userWithNewDocument = userService.addDocumentToUser(foundUser.getId(), newDocument1);
 
         assertEquals(user.getId(), userWithNewDocument.getId());
-        assertEquals(1, documents.size());
+        assertEquals(1, userWithNewDocument.getDocuments().size());
+
+        Document newDocument2 = Document.builder()
+                .documentType(DocumentType.PASSPORT)
+                .issueDate(LocalDate.of(2025,8, 29))
+                .expirationDate(LocalDate.of(2030, 8,29))
+                .build();
+
+        User userWithTwoDocuments = userService.addDocumentToUser(foundUser.getId(), newDocument2);
+
+        List<Document> documents = userService.getDocumentsByUserId(userWithTwoDocuments.getId());
+
+        assertEquals(user.getId(), userWithNewDocument.getId());
+        assertEquals(2, documents.size());
     }
 
     @Test

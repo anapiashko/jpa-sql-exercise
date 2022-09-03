@@ -40,4 +40,10 @@ public class UserService {
     public List<Document> getDocumentsByUserId (Integer userId) {
         return userRepository.getDocumentsById(userId);
     }
+
+    public User addDocumentToUser (Integer userId, Document document) {
+        User user = findUserWithDocumentsById(userId);
+        user.getDocuments().add(document);
+        return userRepository.save(user);
+    }
 }
