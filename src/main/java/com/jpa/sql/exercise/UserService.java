@@ -54,4 +54,8 @@ public class UserService {
         }
         return userRepository.save(user);
     }
+
+    public List<Document> getValidDocumentsByUserId (Integer userId) {
+        return userRepository.getValidDocumentsByUserId(userId);
+    }
 }

@@ -117,6 +117,25 @@ class UserServiceTest {
         assertNotNull(user);
     }
 
+    @Test
+    @Sql(scripts = "classpath:populateDBdocuments.sql")
+    void getValidDocumentsByUserId () {
+        User user = User.builder()
+                .name("P")
+                .manager(null)
+                .documents(Arrays.asList(
+                        Document.builder().id(1).build(),
+                        Document.builder().id(2).build(),
+                        Document.builder().id(3).build(),
+                        Document.builder().id(4).build()))
+                .build();
+        User savedUser = userService.saveUser(user);
+
+        List<Document> validDocuments = userService.getValidDocumentsByUserId(savedUser.getId());
+
+        assertEquals(3, validDocuments.size());
+    }
+
     private <T> boolean equalsExpectedList(List<T> expectedElements, List<T> elements) {
 
         if (expectedElements.size() != elements.size()) return false;

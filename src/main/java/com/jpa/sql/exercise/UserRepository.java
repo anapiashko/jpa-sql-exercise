@@ -33,4 +33,9 @@ public interface UserRepository extends JpaRepository<User, Integer>, UserCriter
             "left join fetch u.documents " +
             "where u.id = :id")
     User getUserWithDocuments(Integer id);
+
+    @Query(value = "select u.documents " +
+            "from User u " +
+            "where u.id = :id and expiration_date > CURRENT_DATE")
+    List<Document> getValidDocumentsByUserId(Integer id);
 }
