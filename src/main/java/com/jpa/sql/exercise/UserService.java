@@ -4,10 +4,14 @@ import com.jpa.sql.exercise.entities.Document;
 import com.jpa.sql.exercise.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -41,9 +45,13 @@ public class UserService {
         return userRepository.getDocumentsById(userId);
     }
 
-    public User addDocumentToUser (Integer userId, Document document) {
+    public User addDocumentToUser(Integer userId, Document document) {
         User user = findUserWithDocumentsById(userId);
-        user.getDocuments().add(document);
+        if (user.getDocuments() == null) {
+            user.setDocuments(new ArrayList<>(Arrays.asList(document)));
+        } else {
+            user.getDocuments().add(document);
+        }
         return userRepository.save(user);
     }
 }
