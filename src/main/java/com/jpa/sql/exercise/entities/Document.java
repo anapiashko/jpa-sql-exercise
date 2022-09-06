@@ -23,4 +23,7 @@ public class Document {
     private LocalDate expirationDate;
 
     private DocumentType documentType;
+
+    @ManyToOne
+    private User user;
 }

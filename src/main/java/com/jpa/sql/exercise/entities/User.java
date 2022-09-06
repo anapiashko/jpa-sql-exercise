@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +26,8 @@ public class User {
     @JoinColumn(name = "manager_id")
     private User manager;
 
-    @OneToMany(cascade = CascadeType.MERGE)
-    private List<Document> documents;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Document> documents = new ArrayList<>();
 
     public User(Integer id, String name) {
         this.id = id;
@@ -35,6 +36,11 @@ public class User {
 
     public User(String name) {
         this.name = name;
+    }
+
+    public void addDocument(Document child) {
+        child.setUser(this);
+        this.documents.add(child);
     }
 
     @Override

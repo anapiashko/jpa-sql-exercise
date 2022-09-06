@@ -10,6 +10,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,29 +50,28 @@ class UserServiceTest {
     }
 
     @Test
-    @Sql(scripts = "classpath:populateDBdocuments.sql")
     void getDocumentsByUserId() {
         User expectedUser = User.builder()
                 .name("A")
-                .manager(null)
-                .documents(Arrays.asList(Document.builder().id(1).build(),
-                        Document.builder().id(2).build(),
-                        Document.builder().id(3).build()))
+                .documents(new ArrayList<>())
                 .build();
+        expectedUser.addDocument(Document.builder().documentType(DocumentType.PASSPORT).build());
+        expectedUser.addDocument(Document.builder().documentType(DocumentType.DRIVING_LICENSE).build());
+        expectedUser.addDocument(Document.builder().documentType(DocumentType.INSURANCE).build());
+
         User user = userService.saveUser(expectedUser);
 
         List<Document> documents = userService.getDocumentsByUserId(user.getId());
         assertEquals(3, documents.size());
+        assertEquals(expectedUser.getId(), documents.get(0).getUser().getId());
     }
 
     @Test
     void addDocumentsToUser() {
 
-        // save the user itself
+        // save user without documents
         User expectedUser = User.builder()
                 .name("A")
-                .manager(null)
-                .documents(null)
                 .build();
         User user = userService.saveUser(expectedUser);
 
@@ -82,6 +82,7 @@ class UserServiceTest {
                 .documentType(DocumentType.INSURANCE)
                 .issueDate(LocalDate.of(2025,8, 29))
                 .expirationDate(LocalDate.of(2030, 8,29))
+                .user(foundUser)
                 .build();
 
         User userWithNewDocument = userService.addDocumentToUser(foundUser.getId(), newDocument1);
@@ -93,6 +94,7 @@ class UserServiceTest {
                 .documentType(DocumentType.PASSPORT)
                 .issueDate(LocalDate.of(2025,8, 29))
                 .expirationDate(LocalDate.of(2030, 8,29))
+                .user(userWithNewDocument)
                 .build();
 
         User userWithTwoDocuments = userService.addDocumentToUser(foundUser.getId(), newDocument2);
@@ -104,31 +106,32 @@ class UserServiceTest {
     }
 
     @Test
-    @Sql(scripts = "classpath:populateDBdocuments.sql")
     void saveUserWithDocuments () {
         User expectedUser = User.builder()
                 .name("A")
                 .manager(null)
-                .documents(Arrays.asList(Document.builder().id(1).build(),
-                        Document.builder().id(2).build()))
+                .documents(new ArrayList<>())
                 .build();
+        expectedUser.addDocument(Document.builder().documentType(DocumentType.PASSPORT).build());
+        expectedUser.addDocument(Document.builder().documentType(DocumentType.DRIVING_LICENSE).build());
 
         User user = userService.saveUser(expectedUser);
+
         assertNotNull(user);
+        assertNotNull(user.getId());
     }
 
     @Test
-    @Sql(scripts = "classpath:populateDBdocuments.sql")
     void getValidDocumentsByUserId () {
         User user = User.builder()
                 .name("P")
-                .manager(null)
-                .documents(Arrays.asList(
-                        Document.builder().id(1).build(),
-                        Document.builder().id(2).build(),
-                        Document.builder().id(3).build(),
-                        Document.builder().id(4).build()))
+                .documents(new ArrayList<>())
                 .build();
+        user.addDocument(Document.builder().expirationDate(LocalDate.of(2032,8,31)).build());
+        user.addDocument(Document.builder().expirationDate(LocalDate.of(2027,8,30)).build());
+        user.addDocument(Document.builder().expirationDate(LocalDate.of(2025,8,29)).build());
+        user.addDocument(Document.builder().expirationDate(LocalDate.of(2012,8,31)).build());
+
         User savedUser = userService.saveUser(user);
 
         List<Document> validDocuments = userService.getValidDocumentsByUserId(savedUser.getId());
