@@ -1,5 +1,6 @@
 package com.jpa.sql.exercise.entities;
 
+import com.jpa.sql.exercise.listeners.UserEventListener;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EntityListeners(UserEventListener.class)
 @Table(name = "users")
 public class User {
     @Id
