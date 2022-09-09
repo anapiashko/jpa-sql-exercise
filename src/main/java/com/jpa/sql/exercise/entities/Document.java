@@ -29,4 +29,7 @@ public class Document {
 
     @ManyToOne
     private User user;
+
+    @Transient
+    private Boolean valid;
 }

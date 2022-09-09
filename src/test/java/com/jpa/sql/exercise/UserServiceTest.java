@@ -139,6 +139,24 @@ class UserServiceTest {
         assertEquals(3, validDocuments.size());
     }
 
+    @Test
+    @Sql(scripts = {"classpath:populateDB.sql", "classpath:populateDBdocuments.sql"})
+    void whenRetrieveEntityThenPostLoadDocumentCalculateValidField() {
+        User foundEntity = userService.findUserWithDocumentsById(1);
+
+        assertNotNull(foundEntity);
+        assertEquals(1, foundEntity.getId());
+
+        for (Document document : foundEntity.getDocuments()) {
+            if (document.getId().equals(1) || document.getId().equals(2) || document.getId().equals(3)){
+                assertTrue(document.getValid());
+            }
+            if (document.getId().equals(4)) {
+                assertFalse(document.getValid());
+            }
+        }
+    }
+
     private <T> boolean equalsExpectedList(List<T> expectedElements, List<T> elements) {
 
         if (expectedElements.size() != elements.size()) return false;

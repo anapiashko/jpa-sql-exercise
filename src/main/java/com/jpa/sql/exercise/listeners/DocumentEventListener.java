@@ -4,6 +4,7 @@ import com.jpa.sql.exercise.entities.Document;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Slf4j
 public class DocumentEventListener {
@@ -40,6 +41,7 @@ public class DocumentEventListener {
 
     @PostLoad
     public void logDocumentLoad(Document document) {
+        document.setValid(LocalDate.now().compareTo(document.getExpirationDate()) < 1);
         log.info("PostLoad document: " + document);
     }
 }
