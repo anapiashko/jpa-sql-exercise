@@ -147,8 +147,9 @@ class UserServiceTest {
         assertNotNull(foundEntity);
         assertEquals(1, foundEntity.getId());
 
+        List<Integer> expectedValidIds = List.of(1,2,3);
         for (Document document : foundEntity.getDocuments()) {
-            if (document.getId().equals(1) || document.getId().equals(2) || document.getId().equals(3)){
+            if (expectedValidIds.contains(document.getId())){
                 assertTrue(document.getValid());
             }
             if (document.getId().equals(4)) {
