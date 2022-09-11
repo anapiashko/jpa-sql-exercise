@@ -1,6 +1,7 @@
 package com.jpa.sql.exercise;
 
 import com.jpa.sql.exercise.entities.User;
+import com.jpa.sql.exercise.entities.User_;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,11 +22,11 @@ public class UserCriteriaRepositoryImpl implements UserCriteriaRepository {
 
         Root<User> user1 = criteriaQuery.from(User.class);
 
-        Join<User,String> user2 = user1.join("manager", JoinType.INNER);
+        Join<User,User> user2 = user1.join(User_.manager, JoinType.INNER);
 
-        criteriaQuery.multiselect(user2.get("id"), user2.get("name"))
-                .groupBy(user2.get("id"))
-                .having(cb.greaterThanOrEqualTo(cb.count(user1.get("id")), 3L))
+        criteriaQuery.multiselect(user2.get(User_.id), user2.get(User_.name))
+                .groupBy(user2.get(User_.id))
+                .having(cb.greaterThanOrEqualTo(cb.count(user1.get(User_.id)), 3L))
         ;
 
         List<User> users = entityManager.createQuery(criteriaQuery).getResultList();
