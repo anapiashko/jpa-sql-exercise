@@ -1,5 +1,7 @@
 package com.jpa.sql.exercise;
 
+import com.jpa.sql.exercise.entities.Document;
+import com.jpa.sql.exercise.entities.DocumentType;
 import com.jpa.sql.exercise.entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -10,18 +12,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JpaSqlExerciseApplication.class)
 class JPAIntegrationTest {
- 
-    @Autowired
-    private UserRepository UserRepository;
 
     @Autowired private DataSource dataSource;
     @Autowired private JdbcTemplate jdbcTemplate;
@@ -38,8 +37,8 @@ class JPAIntegrationTest {
 
     @Test
     void whenSaveAndRetrieveEntityThenOK() {
-        User genericEntity = UserRepository.save(new User("test"));
-        Optional<User> foundEntity = UserRepository.findById(genericEntity.getId());
+        User genericEntity = userRepository.save(new User("test"));
+        Optional<User> foundEntity = userRepository.findById(genericEntity.getId());
 
         assertTrue(foundEntity.isPresent());
         assertNotNull(foundEntity.get());
