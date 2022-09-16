@@ -14,37 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Testcontainers
-class IntegrationSqlScriptTest {
+class TestContainersTest extends AbstractApplicationTest{
 
     @Autowired
     private UserRepository userRepository;
 
-    @Container
-    public static PostgreSQLContainer<?> postgreSQLContainer =
-            new PostgreSQLContainer<>("postgres:14")
-                    .withDatabaseName("mydb")
-                    .withUsername("myuser")
-                    .withPassword("mypass")
-            ;
-
-//    static {
-//        postgreSQLContainer.start();
-//        assertTrue(postgreSQLContainer.isRunning());
-//    }
-
-    @DynamicPropertySource
-    static void properties(DynamicPropertyRegistry registry){
-        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
-        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
-
-    }
-
     @Test
     @Sql(scripts = "classpath:populateDB.sql")
-    void animalsCountShouldBeCorrect() {
+    void countAllUsersInDB() {
         long count = userRepository.count();
-        userRepository.findById(1);
         assertEquals(8, count);
     }
 
