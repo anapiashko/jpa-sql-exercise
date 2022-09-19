@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class UserServiceTest {
+class UserServiceTest extends AbstractApplicationTest {
 
     private final List<User> expected = Arrays.asList(new User(6, "L"));
 
