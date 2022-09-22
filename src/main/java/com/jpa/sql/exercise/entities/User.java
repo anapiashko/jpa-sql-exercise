@@ -1,5 +1,6 @@
 package com.jpa.sql.exercise.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jpa.sql.exercise.listeners.UserEventListener;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -28,6 +29,7 @@ public class User {
     @JoinColumn(name = "manager_id")
     private User manager;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<>();
 

@@ -1,6 +1,6 @@
 package com.jpa.sql.exercise.entities;
 
-import com.jpa.sql.exercise.listeners.DocumentEventListener;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +27,7 @@ public class Document {
 
     private DocumentType documentType;
 
+    @JsonBackReference
     @ManyToOne
     private User user;
 
