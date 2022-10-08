@@ -33,6 +33,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<>();
 
+    @OneToOne
+    private Address address;
+
     public User(Integer id, String name) {
         this.id = id;
         this.name = name;
